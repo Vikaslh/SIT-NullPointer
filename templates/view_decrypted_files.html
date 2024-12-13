@@ -4,20 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload and Encrypt File</title>
+    <title>Decrypted Files</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background: url('/static/image1.jpg') no-repeat center center fixed;
+            /* Background image */
             background-size: cover;
+            /* Make sure the background covers the entire screen */
             color: #333;
+            /* Black text color */
         }
 
         h1 {
             text-align: center;
             color: black;
+            /* Black text color */
             font-size: 3rem;
             margin-bottom: 20px;
         }
@@ -27,52 +31,19 @@
             max-width: 900px;
             margin: 40px auto;
             padding: 30px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Slightly transparent background */
             border-radius: 20px;
+            /* Curved borders */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             text-align: center;
             color: black;
+            /* Black text color */
             font-size: 1.8rem;
             margin-bottom: 20px;
-        }
-
-        form {
-            text-align: center;
-        }
-
-        input[type="file"] {
-            padding: 15px;
-            margin: 15px 0;
-            width: 60%;
-            border: 2px solid #333;
-            border-radius: 10px;
-            outline: none;
-            background-color: #f1f1f1;
-            color: #333;
-            font-size: 1rem;
-        }
-
-        input[type="file"]:hover {
-            background-color: #e8e8e8;
-        }
-
-        button {
-            padding: 15px 30px;
-            background-color: #2196f3;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        button:hover {
-            background-color: #1976d2;
         }
 
         table {
@@ -91,13 +62,19 @@
 
         th {
             background-color: #2196f3;
+            /* Blue background for table headers */
             color: white;
             font-weight: 600;
+            border-top-left-radius: 10px;
+            /* Curved top-left border */
+            border-top-right-radius: 10px;
+            /* Curved top-right border */
         }
 
         td {
             background-color: #fafafa;
             color: #333;
+            /* Black text color */
         }
 
         tr:hover {
@@ -105,51 +82,70 @@
         }
 
         a {
-            color: #2196f3;
+            color: #2196F3;
+            /* Blue links */
             text-decoration: none;
             font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
         }
 
         a:hover {
             text-decoration: underline;
         }
 
-        button.redirect-btn {
-            width: 50%;
-            margin: 20px auto;
-            background-color: #2196f3;
-            color: white;
+        .download-btn,
+        .delete-btn {
+            padding: 10px 20px;
             border: none;
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 1.1rem;
+            border-radius: 5px;
             cursor: pointer;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
         }
 
-        button.redirect-btn:hover {
-            background-color: #1976d2;
+        .download-btn {
+            background-color: #2196F3;
+            color: white;
         }
 
-        /* Responsive design */
+        .download-btn:hover {
+            background-color: #1976D2;
+            /* Darker blue on hover */
+        }
+
+        .delete-btn {
+            background-color: #F44336;
+            /* Red button */
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #D32F2F;
+            /* Darker red on hover */
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 width: 95%;
                 padding: 20px;
             }
 
-            input[type="file"] {
-                width: 80%;
-            }
-
-            button {
-                width: 80%;
-            }
-
             table {
                 font-size: 0.9rem;
             }
-        }
 
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
         .nav-button .btn {
             padding: 10px 20px;
             font-size: 16px;
@@ -159,7 +155,6 @@
             background-color: #0077ff;
             color: white;
             transition: background-color 0.3s ease;
-            max-width: 25%;
         }
         
         .nav-button .btn:hover {
@@ -184,45 +179,33 @@
 </head>
 
 <body>
-    <h1>File Encryption</h1> 
+    <h1>Decrypted Files</h1>
     <div class="nav-button">
         <button class="btn" id="logoutBtn">Logout</button>
     </div>
-
     <div class="container">
-        <h2>Upload a File to Encrypt</h2>
-        <form method="POST" enctype="multipart/form-data">
-            <input type="file" name="data_file" required>
-            <button type="submit">Upload and Encrypt</button>
-        </form>
-
-        <h2>Encrypted Files</h2>
+        <h2>Decrypted Files</h2>
         <table>
             <tr>
                 <th>ID</th>
                 <th>Original Filename</th>
-                <th>Encrypted Filename</th>
+                <th>Decrypted Filename</th>
                 <th>Actions</th>
             </tr>
             {% for file in files %}
             <tr>
                 <td>{{ file['id'] }}</td>
                 <td>{{ file['original_filename'] }}</td>
-                <td>{{ file['encrypted_filename'] }}</td>
+                <td>{{ file['decrypted_filename'] }}</td>
                 <td>
-                    <a href="/download/{{ file['encrypted_filename'] }}">Download Encrypted</a>
+                    <a class="download-btn" href="/download/{{ file['decrypted_filename'] }}">Download</a>
                     <form method="POST" action="/delete/{{ file['id'] }}" style="display:inline;">
-                        <button type="submit"
-                            style="background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 5px;">
-                            Delete
-                        </button>
+                        <button type="submit" class="delete-btn">Delete</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </table>
-        <br><br>
-        <button class="redirect-btn" onclick="window.location.href='/decrypted-files'">Show Decrypted Files</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

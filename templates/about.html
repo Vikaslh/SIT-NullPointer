@@ -23,8 +23,8 @@
                 </ul>
             </div>
             <div class="nav-button">
-                <button class="btn white-btn" id="loginBtn" onclick="location.href='index.html';">Sign In</button>
-                <button class="btn" id="registerBtn" onclick="location.href='index.html';">Sign Up</button>
+                <button class="btn white-btn" id="loginBtn">Log In</button>
+                <button class="btn" id="registerBtn" >Sign Up</button>
             </div>
             <div class="nav-menu-btn">
                 <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -61,6 +61,17 @@
         window.onload = () => {
             document.body.style.opacity = 1;
         };
+
+        const login = document.getElementById("loginBtn");
+        const reg = document.getElementById("registerBtn");
+        login.addEventListener("click", function(e) {
+            e.preventDefault();
+            window.location.href = "/";
+        });
+        reg.addEventListener("click", function(e) {
+            e.preventDefault();
+            window.location.href = "/";
+        });
 
         const links = document.querySelectorAll("a.link");
         links.forEach(link => {

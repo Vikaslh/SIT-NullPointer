@@ -22,8 +22,8 @@
                 </ul>
             </div>
             <div class="nav-button">
-                <button class="btn white-btn" id="loginBtn">Sign In</button>
-                <button class="btn" id="registerBtn">Sign Up</button>
+                <button class="btn white-btn" id="switchToLogin">Log In</button>
+                <button class="btn" id="switchToRegister">Sign Up</button>
             </div>
             <div class="nav-menu-btn">
                 <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -35,7 +35,6 @@
                 <div class="flip-card-front">
                     <div class="form-box">
                         <div class="top">
-                            <span>Don't have an account? <a href="#" id="switchToRegister">Sign Up</a></span>
                             <header>Login</header>
                         </div>
                         <form id="loginForm">
@@ -52,11 +51,10 @@
 
                         <div class="two-col">
                             <div class="one">
-                                <input type="checkbox" id="login-check">
-                                <label for="login-check"> Remember Me</label>
+                                
                             </div>
                             <div class="two">
-                                <label><a href="#">Forgot password?</a></label>
+
                             </div>
                         </div>
                     </div>
@@ -65,7 +63,6 @@
                 <div class="flip-card-back">
                     <div class="form-box">
                         <div class="top">
-                            <span>Have an account? <a href="#" id="switchToLogin">Login</a></span>
                             <header>Sign Up</header>
                         </div>
                         <form id="registerForm">
@@ -104,6 +101,7 @@
             const switchToRegister = document.getElementById('switchToRegister');
             const switchToLogin = document.getElementById('switchToLogin');
             const flipCard = document.getElementById('flipCardInner');
+            
 
             switchToRegister.addEventListener('click', function (e) {
                 e.preventDefault();
