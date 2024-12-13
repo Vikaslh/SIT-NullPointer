@@ -1,0 +1,261 @@
+/* POPPINS FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Ensure the background covers the whole screen */
+html,
+body {
+    height: 100%;
+    /* Ensure full height for both html and body */
+    margin: 0;
+    /* Remove default margin */
+}
+
+
+body {
+    background: rgba(0, 0, 0, 0.3) url("image1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333;
+    padding: 30px 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+.nav-logo h1 {
+    font-size: 30px;
+    color: #1d1d1d;
+    font-weight: bold;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-menu ul li {
+    display: inline-block;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #1d1d1d;
+    font-weight: bold;
+}
+
+.nav-menu ul li a.active {
+    color: #0077ff;
+}
+
+.nav-button .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: #0077ff;
+    color: white;
+}
+
+.nav-button .white-btn {
+    background-color: white;
+    color: #0077ff;
+}
+
+.nav-menu-btn {
+    display: none;
+}
+
+/* Flip Card Styles */
+.flip-card {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.flip-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+}
+
+.flip-card-front {
+    background-color: #fff;
+    padding: 30px;
+}
+
+.flip-card-back {
+    background-color: #fff;
+    padding: 30px;
+    transform: rotateY(180deg);
+}
+
+.form-box {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.top {
+    text-align: center;
+}
+
+.top span {
+    font-size: 14px;
+}
+
+.top header {
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.input-box {
+    margin: 20px 0;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.input-box i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.submit {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: #0077ff;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #5ba8ff;
+}
+
+.two-col {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.two-col .one {
+    font-size: 14px;
+}
+
+.two-col .two {
+    font-size: 14px;
+}
+
+.two-col label {
+    color: #0077ff;
+}
+
+/* Style for the Google Login Button */
+.social-login {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #db4437;
+    color: white;
+}
+
+.social-btn i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.social-btn:hover {
+    background-color: #c1351d;
+}
+
+
+.about-section {
+    width: 60%;
+    margin: 1.5rem auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-align: center;
+}
+
+.about-section header {
+    font-size: 35px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.about-section p:last-child {
+    margin-bottom: 0;
+}
