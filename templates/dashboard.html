@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Dashboard - NullPointers</title>
+</head>
+
+<body>
+    <div class="dashboard">
+        <nav class="nav">
+            <div class="nav-logo">
+                <h1>NullPointers</h1>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="{{ url_for('home') }}" class="link">Home</a></li>
+                    <li><a href="{{ url_for('about') }}" class="link">About</a></li>
+                </ul>
+            </div>
+            <div class="nav-button">
+                <button class="btn" id="logoutBtn">Logout</button>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <div class="content">
+            <h2>Welcome to your Dashboard</h2>
+            <p>You are now logged in!</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = sessionStorage.getItem('authToken');
+            if (!token) {
+                alert('Please login first');
+                window.location.href = '/';
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                fetch('/logout', {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    sessionStorage.removeItem('authToken');
+                    window.location.href = '/';
+                })
+                .catch(error => console.error('Logout Error:', error));
+            });
+        });
+    </script>
+</body>
+
+</html>
