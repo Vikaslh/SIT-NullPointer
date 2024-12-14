@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>About Us</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                <h1>NullPointers!</h1>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="{{ url_for('home') }}" class="link">Home</a></li>
+                    <li><a href="{{ url_for('about') }}" class="link active">About</a></li>
+                </ul>
+            </div>
+            <div class="nav-button">
+                <button class="btn white-btn" id="loginBtn">Log In</button>
+                <button class="btn" id="registerBtn" >Sign Up</button>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <div class="about-section">
+            <header>About Us</header>
+            <p>
+                Welcome to NullPointers! We are a team of passionate developers dedicated to crafting intuitive,
+                responsive, and user-centric websites. Our mission is to deliver exceptional user experiences
+                while pushing the boundaries of creativity and innovation in web design.
+            </p>
+            <p>
+                With expertise in front-end and back-end development, we specialize in building dynamic,
+                high-performance applications tailored to meet your unique needs. Thank you for trusting us to bring
+                your vision to life.
+            </p>
+            <p>
+                Explore our journey, vision, and the services we offer to make your digital dreams a reality.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function myMenuFunction() {
+            var i = document.getElementById("navMenu");
+            i.classList.toggle("responsive");
+        }
+    </script>
+    <script>
+        document.body.style.opacity = 0;
+        document.body.style.transition = "opacity 0.5s ease-in-out";
+        window.onload = () => {
+            document.body.style.opacity = 1;
+        };
+
+        const login = document.getElementById("loginBtn");
+        const reg = document.getElementById("registerBtn");
+        login.addEventListener("click", function(e) {
+            e.preventDefault();
+            window.location.href = "/";
+        });
+        reg.addEventListener("click", function(e) {
+            e.preventDefault();
+            window.location.href = "/";
+        });
+
+        const links = document.querySelectorAll("a.link");
+        links.forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                const target = this.href;
+                document.body.style.opacity = 0;
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 500);
+            });
+        });
+    </script>
+</body>
+
+</html>

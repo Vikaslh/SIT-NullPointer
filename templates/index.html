@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>NullPointers - Login & Registration</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                <h1>NullPointers!</h1>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="{{ url_for('home') }}" class="link active">Home</a></li>
+                    <li><a href="{{ url_for('about') }}" class="link">About</a></li>
+                </ul>
+            </div>
+            <div class="nav-button">
+                <button class="btn white-btn" id="switchToLogin">Log In</button>
+                <button class="btn" id="switchToRegister">Sign Up</button>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <div class="flip-card">
+            <div class="flip-card-inner" id="flipCardInner">
+                <div class="flip-card-front">
+                    <div class="form-box">
+                        <div class="top">
+                            <header>Login</header>
+                        </div>
+                        <form id="loginForm">
+                            <div class="input-box">
+                                <input type="email" class="input-field" placeholder="Email" id="loginEmail" required>
+                            </div>
+                            <div class="input-box">
+                                <input type="password" class="input-field" placeholder="Password" id="loginPassword" required>
+                            </div>
+                            <div class="input-box">
+                                <input type="submit" class="submit" value="Sign In">
+                            </div>
+                        </form>
+
+                        <div class="two-col">
+                            <div class="one">
+                                
+                            </div>
+                            <div class="two">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card-back">
+                    <div class="form-box">
+                        <div class="top">
+                            <header>Sign Up</header>
+                        </div>
+                        <form id="registerForm">
+                            <div class="two-forms">
+                                <div class="input-box">
+                                    <input type="text" class="input-field" placeholder="Firstname" id="registerFirstName" required>
+                                </div>
+                                <div class="input-box">
+                                    <input type="text" class="input-field" placeholder="Lastname" id="registerLastName" required>
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <input type="email" class="input-field" placeholder="Email" id="registerEmail" required>
+                            </div>
+                            <div class="input-box">
+                                <input type="password" class="input-field" placeholder="Password" id="registerPassword" required minlength="8">
+                            </div>
+                            <div class="two-col">
+                                <div class="one">
+                                    <input type="checkbox" id="register-check" required>
+                                    <label for="register-check"> I agree to Terms & Conditions</label>
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <input type="submit" class="submit" value="Register">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const switchToRegister = document.getElementById('switchToRegister');
+            const switchToLogin = document.getElementById('switchToLogin');
+            const flipCard = document.getElementById('flipCardInner');
+            
+
+            switchToRegister.addEventListener('click', function (e) {
+                e.preventDefault();
+                flipCard.style.transform = 'rotateY(180deg)';
+            });
+
+            switchToLogin.addEventListener('click', function (e) {
+                e.preventDefault();
+                flipCard.style.transform = 'rotateY(0deg)';
+            });
+
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.token) {
+                        sessionStorage.setItem('authToken', data.token);
+                        const authToken = sessionStorage.getItem('authToken'); 
+                        console.log(authToken);
+                        window.location.href = '/dashboard';
+                        fetch('/dashboard', {
+                            method: 'GET',
+                            headers: { 'Authorization': authToken,
+                        'id': data.user.id }
+                        })
+
+                    } else {
+                        alert(data.message || 'Login failed');
+                    }
+                })
+                .catch(error => console.error('Login Error:', error));
+            });
+
+            const registerForm = document.getElementById('registerForm');
+            registerForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const firstName = document.getElementById('registerFirstName').value;
+                const lastName = document.getElementById('registerLastName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+
+                fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ first_name: firstName, last_name: lastName, email, password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.message === 'User registered successfully') {
+                        flipCard.style.transform = 'rotateY(0deg)';
+                    }
+                })
+                .catch(error => console.error('Registration Error:', error));
+            });
+        });
+    </script>
+</body>
+
+</html>

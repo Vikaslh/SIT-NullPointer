@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Encrypt File</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: url('/static/image1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: black;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="file"] {
+            padding: 15px;
+            margin: 15px 0;
+            width: 60%;
+            border: 2px solid #333;
+            border-radius: 10px;
+            outline: none;
+            background-color: #f1f1f1;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        input[type="file"]:hover {
+            background-color: #e8e8e8;
+        }
+        input[type="text"] {
+            padding: 15px;
+            margin: 15px 0;
+            width: 60%;
+            border: 2px solid #333;
+            border-radius: 10px;
+            outline: none;
+            background-color: #f1f1f1;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        input[type="text"]::focus {
+            background-color: #e8e8e8;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #1976d2;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        th {
+            background-color: #2196f3;
+            color: white;
+            font-weight: 600;
+        }
+
+        td {
+            background-color: #fafafa;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            color: #2196f3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button.redirect-btn {
+            width: 50%;
+            margin: 20px auto;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        button.redirect-btn:hover {
+            background-color: #1976d2;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            input[type="file"] {
+                width: 80%;
+            }
+
+            button {
+                width: 80%;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+        }
+
+        .nav-button .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #0077ff;
+            color: white;
+            transition: background-color 0.3s ease;
+            max-width: 25%;
+        }
+        
+        .nav-button .btn:hover {
+            background-color: #005cbf;
+        }
+        
+        .nav-button .white-btn {
+            background-color: white;
+            color: #0077ff;
+            border: 1px solid #0077ff;
+        }
+        
+        .nav-button .white-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .nav-menu-btn {
+            display: none;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <h1>File Encryption</h1> 
+    <div class="nav-button">
+        <button class="btn" id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="container">
+        <h2>Upload a File to Encrypt</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="data_file" required>
+            <input type="text" name="recv" placeholder="Enter Receiver's ID" required>
+            <button type="submit">Upload and Encrypt</button>
+        </form>
+
+        <h2>Encrypted Files</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Original Filename</th>
+                <th>Encrypted Filename</th>
+                <th>Actions</th>
+            </tr>
+            {% for file in files %}
+            <tr>
+                <td>{{ file['id'] }}</td>
+                <td>{{ file['original_filename'] }}</td>
+                <td>{{ file['encrypted_filename'] }}</td>
+                <td>
+                    <a href="/download/{{ file['encrypted_filename'] }}">Download Encrypted</a>
+                    <form method="POST" action="/delete/{{ file['id'] }}" style="display:inline;">
+                        <button type="submit"
+                            style="background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 5px;">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+        <button class="redirect-btn" onclick="window.location.href='/decrypted-files'">Show Decrypted Files</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = sessionStorage.getItem('authToken');
+            if (!token) {
+                alert('Please login first');
+                window.location.href = '/';
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                fetch('/logout', {
+                    method: 'GET',
+                    headers: { 'Authorization': token }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    sessionStorage.removeItem('authToken');
+                    window.location.href = '/';
+                })
+                .catch(error => console.error('Logout Error:', error));
+            });
+
+        });
+    </script>
+</body>
+
+</html>
