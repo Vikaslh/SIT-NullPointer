@@ -58,6 +58,21 @@
         input[type="file"]:hover {
             background-color: #e8e8e8;
         }
+        input[type="text"] {
+            padding: 15px;
+            margin: 15px 0;
+            width: 60%;
+            border: 2px solid #333;
+            border-radius: 10px;
+            outline: none;
+            background-color: #f1f1f1;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        input[type="text"]::focus {
+            background-color: #e8e8e8;
+        }
 
         button {
             padding: 15px 30px;
@@ -193,6 +208,7 @@
         <h2>Upload a File to Encrypt</h2>
         <form method="POST" enctype="multipart/form-data">
             <input type="file" name="data_file" required>
+            <input type="text" name="recv" placeholder="Enter Receiver's ID" required>
             <button type="submit">Upload and Encrypt</button>
         </form>
 
@@ -235,7 +251,7 @@
             document.getElementById('logoutBtn').addEventListener('click', function () {
                 fetch('/logout', {
                     method: 'GET',
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: { 'Authorization': token }
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -245,6 +261,7 @@
                 })
                 .catch(error => console.error('Logout Error:', error));
             });
+
         });
     </script>
 </body>

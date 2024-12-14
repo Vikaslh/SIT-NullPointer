@@ -218,7 +218,7 @@
             document.getElementById('logoutBtn').addEventListener('click', function () {
                 fetch('/logout', {
                     method: 'GET',
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: { 'Authorization': token }
                 })
                 .then(response => response.json())
                 .then(data => {

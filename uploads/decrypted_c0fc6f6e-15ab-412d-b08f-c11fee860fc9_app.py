@@ -74,7 +74,7 @@ def upload_file():
         # Store the file's info in the database
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO files (original_filename, encrypted_filename, decrypted_filename, user_id, recv_id) VALUES (?, ?, ?, ?,?)',(file.filename, encrypted_filename, decrypted_filename,curr_user,to,))
+        cursor.execute('INSERT INTO files (original_filename, encrypted_filename, decrypted_filename, user_id, recv_id) VALUES (?, ?, ?, ?)',(file.filename, encrypted_filename, decrypted_filename,curr_user,to,))
         conn.commit()
         conn.close()
 
@@ -88,8 +88,7 @@ def decrypted_files():
     # Fetch all decrypted files from the database
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    # cursor.execute('SELECT id, original_filename, decrypted_filename FROM files WHERE user_id = ?',(curr_user,))
-    cursor.execute('SELECT id, original_filename, decrypted_filename FROM files WHERE decrypted_filename IS NOT NULL')
+    cursor.execute('SELECT id, original_filename, decrypted_filename FROM files WHERE user_id = ?',(curr_user,))
     files = [dict(id=row[0], original_filename=row[1], decrypted_filename=row[2]) for row in cursor.fetchall()]
     conn.close()
 
@@ -193,16 +192,13 @@ def about():
 def dashboard():
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
-    global curr_user 
     curr_user = request.headers.get('id')
-    print(curr_user)
-    # cursor.execute('SELECT id, original_filename, encrypted_filename FROM files where user_id = ?',(curr_user, ))
-    cursor.execute('SELECT id, original_filename, encrypted_filename FROM files')
-    files = [dict(id=row[0], original_filename=row[1], encrypted_filename=row[2]) for row in cursor.fetchall()]
+    cursor.execute('SELECT id, original_filename, encrypted_filename FROM files where user_id = ?',(curr_user, ))
+    files = [dict(id=row[0], original_filename=row[1], encrypted_filename=row[2], user_id=row[3],recv_id=row[4]) for row in cursor.fetchall()]
     conn.close()
 
     # Render the upload form and file table
-    return render_template('dashboard.html', files=files)
+    return render_template('dashboard.html', files=files,user=curr_user)
 
 @app.route('/register', methods=['POST'])
 def register():

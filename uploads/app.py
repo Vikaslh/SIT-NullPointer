@@ -88,8 +88,7 @@ def decrypted_files():
     # Fetch all decrypted files from the database
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    # cursor.execute('SELECT id, original_filename, decrypted_filename FROM files WHERE user_id = ?',(curr_user,))
-    cursor.execute('SELECT id, original_filename, decrypted_filename FROM files WHERE decrypted_filename IS NOT NULL')
+    cursor.execute('SELECT id, original_filename, decrypted_filename FROM files WHERE user_id = ?',(curr_user,))
     files = [dict(id=row[0], original_filename=row[1], decrypted_filename=row[2]) for row in cursor.fetchall()]
     conn.close()
 
@@ -196,8 +195,7 @@ def dashboard():
     global curr_user 
     curr_user = request.headers.get('id')
     print(curr_user)
-    # cursor.execute('SELECT id, original_filename, encrypted_filename FROM files where user_id = ?',(curr_user, ))
-    cursor.execute('SELECT id, original_filename, encrypted_filename FROM files')
+    cursor.execute('SELECT id, original_filename, encrypted_filename FROM files where user_id = ?',(curr_user, ))
     files = [dict(id=row[0], original_filename=row[1], encrypted_filename=row[2]) for row in cursor.fetchall()]
     conn.close()
 
@@ -281,7 +279,6 @@ def logout():
 if __name__ == '__main__':
     init_db()
     global curr_user
-    curr_user = 0
     app.run(debug=True)
 
 
